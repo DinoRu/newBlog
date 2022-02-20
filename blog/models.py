@@ -8,6 +8,16 @@ STATUS = [
     ('R', 'Rediger'),
     ('P', 'Publier'),
 ]
+
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('blog:home')
+
 class Article(models.Model):
     titre = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255)
@@ -30,17 +40,6 @@ class Article(models.Model):
         return self.likes.count()
 
         
-
-class Category(models.Model):
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.name
-
-    def get_absolute_url(self):
-        return reverse('blog:home')
-        
-
 class Comment(models.Model):
     article = models.ForeignKey(Article, related_name="comments", on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
@@ -49,3 +48,5 @@ class Comment(models.Model):
 
     def __str__(self):
         return "%s - %s" % (self.article.titre, self.name)
+
+
