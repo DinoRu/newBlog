@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Add Category{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3 mt-5 justify-content-center">
+            {% if user.is_authenticated%}
+            <div class="card">
+                <div class="card-body p-5">
+                    <h3 class="text-center">Ajout Categorie</h3>
+                    <hr/>
+                    <form  class="form-group" method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" class="btn btn-primary" value="Ajouter"/>
+                    </form>
+                </div>
+                {% else %}
+                    <p>You're not allowed here!</p>
+                {% endif %}
+                
+            </div>
+        </div>
+    </div>
+ 
+{% endblock %}

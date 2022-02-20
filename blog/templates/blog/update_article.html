@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Article{% endblock %}
+
+{% block content %}
+    <div class="row">
+        
+
+        {% if user.is_authenticated %}
+        <div class="col-md-6 offset-md-3 mt-5 justify-content-center">
+            <div class="card">
+                <div class="card-body p-5">
+                    <h3 class="text-center">Edition d'Article</h3>
+                    <hr/>
+                    <form  class="form-group" method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" class="btn btn-primary" value="Modifier"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% else %}
+            <p>You're not allowed here!</p>
+        {% endif %}
+    </div>
+ 
+{% endblock %}

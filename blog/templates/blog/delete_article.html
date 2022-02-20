@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Add post{% endblock %}
+
+{% block content %}
+    <div class="row">
+        
+        {% if user.is_authenticated %}
+        <div class="col-md-6 offset-md-3 mt-5 justify-content-center">
+            <h1>Suprimer l'article ...</h1>
+            <h3>Suprimer: {{ object.titre  }}</h3>
+            <br />
+            <div class="form-group">
+                <form method="POST">
+                    {% csrf_token %}
+                    <strong>Êtes-vous sûr ?</strong><br /><br />
+                    <button class="btn btn-secondary">Suprimer</button>
+                </form>
+            </div>
+        </div>
+        {% else %}
+            <p>You're not allowed here!</p>
+        {% endif %}
+    </div>
+ 
+{% endblock %}

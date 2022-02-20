@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+    <div class="col-md-7 offset-md-2 gy-4">
+        {% for post in object_list %}
+        <div class="col bg-light mt-4 p-5 post">
+            <h4 class="mb-4"><a href="{% url 'blog:article-detail' post.id %}" class="text-decoration-none titre">{{ post.titre }}</a></h4>
+            <div class="details mb-4">
+                <div class="author">
+                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="rounded-circle" height="40px" width="40px"/>
+                </div>
+                <div class="title">
+                    {{ post.author }}<br/>
+                    {{ post.date_creation }}
+                </div>
+            </div>
+           
+            <p class="">{{ post.contenu | truncatewords:30|safe}}<a href="{% url 'blog:article-detail' post.id %}">Read more</a></p>
+            {% if user.is_staff %}
+            <small><a href="{% url 'blog:article-edit' post.id %}" class="text-decoration-none">(Edit)</a></small><small><a href="{% url 'blog:article-delete' post.id %}" class="text-decoration-none float-end">(Delete)</a></small>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

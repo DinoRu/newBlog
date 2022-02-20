@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+ <div class="row">
+     <div class="col carousel d-flex justify-content-center align-items-center p-5">
+        <div class="col-md-6 offset-md-1 justify-content-center align-items-center">
+            <h1 class="text-center text-white fw-bolder">{{  object.titre }}</h1>
+        </div>
+     </div>
+ </div>
+ <div class="row">
+     <div class="col-md-6 offset-md-3 mt-5">
+         <p class="lh-lg">{{ object.contenu|safe }}</p>
+         <p class="fst-italic">Categorie: <a href="{% url 'blog:category' post.category %}"><span class="text-primary">{{ object.category}}</span></a></p>
+         <br/><br/>
+         <div class="alert alert-danger align-items-center post" role="alert">
+            <h2 class="text-black">Assistance Django Code</h2>
+            <p>
+                Si vous appréciez mon travail, ou s'il vous a aidé tout au long de votre cheminement. 
+                Cela signifierait beaucoup pour moi si vous pouviez écrire un message sur mon mur et 
+                partager une tasse de café (ou de thé) avec moi.
+            </p>
+            <button type="submit" class="btn btn-success rounded-pill align-items-center fs-5 py-2 fst-italic aide"><i class="fa fa-coffee"></i> By me a coffee</button>
+          </div>
+         <hr/>
+        <br/>
+        <div class="col border-bottom pb-2">
+            <a href="" class="text-decoration-none ms-4 text-secondary">Commentaire</a>
+            <a href="" class="text-decoration-none ms-4 text-secondary">DjangoCode</a>
+            <a href="" class="text-decoration-none ms-4 text-secondary">Privacy Policy</a>
+            <a href="" class="text-decoration-none float-end text-secondary"><i class="fa fa-comment" aria-hidden="true"></i> Login</a>
+        </div>
+        <div class="col border-bottom py-5">
+            {% if not object.comments.all %}
+                No Comments yet....<a href="{% url 'blog:article-comment' object.pk %}">Add One</a>
+            {% else %}
+                {% for comment in object.comments.all %}
+                    <strong>{{ comment.name }}</strong>
+                    <strong>{{ comment.date_added }}</strong>
+                    <br />
+                    {{ comment.body|safe }}
+                    <br /><br />
+                {% endfor %}
+                <a href="{% url 'blog:article-comment' object.pk %}">Ecrire ton commentaire ici.</a>
+            {% endif %}
+        </div>
+        <br/>
+     
+        <form action="{% url 'blog:like_post' post.pk %}" method="POST">
+            {% csrf_token %}
+
+
+            {% if user.is_authenticated %}
+                {% if liked %}
+                    <button type="submit" class="btn btn-danger", name="post_id", value="{{ post.id }}">Unliked</button> 
+                {% else %}
+                <button type="submit" class="btn btn-primary", name="post_id", value="{{ post.id }}">Liked</button>
+                {% endif %}
+            {% else %}
+                <small><a href="{% url 'login' %}">Login to like</a></small>
+            {% endif %}
+            - <span class="fst-italic text-secondary">{{ total_likes }} likes</span>
+        </form>
+     </div>
+
+    
+    {% if user.is_authenticated %}
+    <p>
+        <a href="{% url 'blog:home' %}" class="btn btn-secondary">Back</a>
+        {% if user.staff.is_staff %}
+        <a href="{% url 'blog:article-edit' post.id %}" class="btn btn-secondary float-end">Edit</a>
+        {% endif %}
+    </p>
+    {% endif %}
+ </div>
+</div>
+{% endblock %}
