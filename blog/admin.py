@@ -1,7 +1,6 @@
 from django.contrib import admin
-from .models import Article, Category, Comment
+from .models import Article, Comment
 
-admin.site.register(Category)
 admin.site.register(Comment)
 
 @admin.register(Article)

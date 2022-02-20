@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.views import View
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Article, Category, Comment
+from .models import Article, Comment
 from .forms import ArticleForm, EditForm, CommentForm
 
 
@@ -96,11 +96,3 @@ class ArticleDeleteView(DeleteView):
     model = Article
     template_name = 'blog/delete_article.html'
     success_url = reverse_lazy('blog:home')
-
-
-class AddCategoryView(CreateView):
-    
-    model = Category
-    #form_class = ArticleForm
-    template_name = 'blog/add_category.html'
-    fields = '__all__'

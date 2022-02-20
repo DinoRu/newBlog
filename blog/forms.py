@@ -1,12 +1,7 @@
 
 from django import forms
-from .models import Article, Category, Comment
+from .models import Article, Comment
 
-choices = Category.objects.all().values_list("name", "name")
-
-choice_list = []
-for item in choices:
-    choice_list.append(item)
 
 class ArticleForm(forms.ModelForm):
 
@@ -18,7 +13,7 @@ class ArticleForm(forms.ModelForm):
             'titre': forms.TextInput(attrs={'class': 'form-control'}),
             'slug': forms.TextInput(attrs={'class': 'form-control'}),
             'author': forms.Select(attrs={'class': 'form-control'}),
-            'category': forms.Select(attrs={'class': 'form-control'}, choices=choice_list),
+            'category': forms.TextInput(attrs={'class': 'form-control'}),
             'contenu': forms.Textarea(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
         }
@@ -34,7 +29,7 @@ class EditForm(forms.ModelForm):
             'titre': forms.TextInput(attrs={'class': 'form-control'}),
             'slug': forms.TextInput(attrs={'class': 'form-control'}),
             'author': forms.Select(attrs={'class': 'form-control'}),
-            'category': forms.Select(attrs={'class': 'form-control'}, choices=choice_list),
+            'category': forms.TextInput(attrs={'class': 'form-control'}),
             'contenu': forms.Textarea(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
         }
