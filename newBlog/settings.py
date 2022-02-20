@@ -123,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'fr-fr'
 
-TIME_ZONE = 'EUROPE/Moscow'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
